@@ -1,7 +1,7 @@
 (* Programming language concepts for software developers, 2010-08-28 *)
 
 (* Evaluating simple expressions with variables *)
-module onetwo
+module One2
 
 (* Association lists map object language variables to their values *)
 
