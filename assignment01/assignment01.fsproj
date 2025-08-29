@@ -4,6 +4,6 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="Intro2.fs" />
+        <Compile Include="one-one.fs" />
     </ItemGroup>
 </Project>
