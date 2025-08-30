@@ -55,3 +55,6 @@ nunit-*.xml
 
 # xml
 *.xml
+
+#
+*.class
