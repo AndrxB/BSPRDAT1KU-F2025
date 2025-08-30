@@ -6,5 +6,6 @@
     <ItemGroup>
         <Compile Include="One1.fs" />
         <Compile Include="One2.fs" />
+        <Compile Include="Two1.fs" />
     </ItemGroup>
 </Project>
