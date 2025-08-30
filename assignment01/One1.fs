@@ -59,16 +59,16 @@ let rec eval1 e (env : (string * int) list) : int =
     match e with
     | CstI i              -> i
     | Var x               -> lookup env x
-    | Prim("+", e1, e2)   -> eval e1 env + eval e2 env
-    | Prim("*", e1, e2)   -> eval e1 env * eval e2 env
-    | Prim("-", e1, e2)   -> eval e1 env - eval e2 env
+    | Prim("+", e1, e2)   -> eval1 e1 env + eval1 e2 env
+    | Prim("*", e1, e2)   -> eval1 e1 env * eval1 e2 env
+    | Prim("-", e1, e2)   -> eval1 e1 env - eval1 e2 env
     | Prim("min", e1, e2) ->
-      let e1', e2' = eval e1 env, eval e2 env
+      let e1', e2' = eval1 e1 env, eval1 e2 env
       if e1' >= e2' then e2' else e1'
     | Prim("max", e1, e2) ->
-      let e1', e2' = eval e1 env, eval e2 env
+      let e1', e2' = eval1 e1 env, eval1 e2 env
       if e1' >= e2' then e1' else e2'
-    | Prim("==", e1, e2)  -> if eval e1 env = eval e2 env then 1 else 0
+    | Prim("==", e1, e2)  -> if eval1 e1 env = eval1 e2 env then 1 else 0
     | Prim _              -> failwith "unknown primitive";;
 
 (*
@@ -78,7 +78,15 @@ let rec eval1 e (env : (string * int) list) : int =
 *)
 let e11 = CstI 1000000
 let e12 = CstI 20
-let e13 = Prim("+", e2, Prim("==", e1, e2))
+let e13 = Prim("==", e1, e2)
+let e14 = Prim("-", e2, e13)
+
+let evale11 = eval1 e11 env;;
+
+let evale13 = eval1 e13 [("a", 14)];;
+
+let evale14 = eval1 e14 [("a", 14)];;
+
 
 (*
   (iii)
