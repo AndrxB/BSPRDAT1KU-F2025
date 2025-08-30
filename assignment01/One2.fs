@@ -74,6 +74,10 @@ type aexpr1 =
   x + y + z + v = Add(Var "x", Add(Var "y", Add(Var "z", Var "v")))
 *)
 
+let ae1 = Sub(Var "v", Add(Var "w", Var "z"));;
+let ae2 = Mul(CstI 2, Sub(Var "v", Add(Var "w", Var "z")));;
+let ae3 = Add(Var "x", Add(Var "y", Add(Var "z", Var "v")));;
+
 (*
   (iii)
   Write an F# function fmt : aexpr -> string to format expressions as strings. 
