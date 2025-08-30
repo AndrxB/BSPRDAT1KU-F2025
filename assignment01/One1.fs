@@ -102,12 +102,12 @@ let evale14 = eval1 e14 [("a", 14)];;
         | "+" -> i1 + i2 
         | ...
 *)
-let rec eval3 e (env : (string * int) list) : int =
+let rec eval2 e (env : (string * int) list) : int =
   match e with
     | CstI i    -> i
     | Var x  -> lookup env x
     | Prim(ope, e1, e2) ->
-      let i1, i2 = eval e1 env, eval e2 env
+      let i1, i2 = eval2 e1 env, eval2 e2 env
       match ope with
         | "+" -> i1 + i2
         | "*" -> i1 * i2
@@ -116,6 +116,9 @@ let rec eval3 e (env : (string * int) list) : int =
         | "max" -> if i1 >= i2 then i1 else i2
         | "==" -> if i1 = i2 then 1 else 0
         | _ -> failwith "unknown operator";;
+
+let eval2e14 = eval2 e14 [("a", 14)];;
+
 
 (*
   (iv)
@@ -127,22 +130,23 @@ let rec eval3 e (env : (string * int) list) : int =
 type expr1 =
   | CstI of int
   | Var of string
-  | Prim of string * expr * expr
-  | If of expr * expr * expr;;
+  | Prim of string * expr1 * expr1
+  | If of expr1 * expr1 * expr1;;
 
 (*
   (v)
   Extend the interpreter function eval correspondingly. It should evaluate e1, 
   and if e1 is non-zero, then evaluate e2, else evaluate e3. You should be able 
-  to evaluate th expression If(Var "a", CstI 11, CstI 22) in an en- vironment 
+  to evaluate the expression If(Var "a", CstI 11, CstI 22) in an environment 
   that binds variable a.
 *)
-let rec eval2 e (env : (string * int) list) : int =
+let rec eval3 (e: expr1) (env : (string * int) list) : int =
   match e with
     | CstI i                            -> i
     | Var x                          -> lookup env x
+    | If(e1, e2, e3)     -> if eval3 e1 env <> 0 then eval3 e2 env else eval3 e3 env
     | Prim(ope, e1, e2) ->
-      let i1, i2 = eval e1 env, eval e2 env
+      let i1, i2 = eval3 e1 env, eval3 e2 env
       match ope with
         | "+" -> i1 + i2
         | "*" -> i1 * i2
@@ -150,5 +154,4 @@ let rec eval2 e (env : (string * int) list) : int =
         | "min" -> if i1 >= i2 then i2 else i1
         | "max" -> if i1 >= i2 then i1 else i2
         | "==" -> if i1 = i2 then 1 else 0
-        | _ -> failwith "unknown operator"
-    | If(e1, e2, e3)     -> if eval e1 env <> 0 then eval e2 env else eval e3 env;;
+        | _ -> failwith "unknown operator";;
