@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="one-one.fs" />
-        <Compile Include="one-two.fs" />
+        <Compile Include="One1.fs" />
+        <Compile Include="One2.fs" />
     </ItemGroup>
 </Project>
