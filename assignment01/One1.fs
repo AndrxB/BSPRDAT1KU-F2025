@@ -78,7 +78,7 @@ let rec eval1 e (env : (string * int) list) : int =
 *)
 let e11 = CstI 1000000
 let e12 = CstI 20
-let e13 = Prim("==", e1, e2)
+let e13 = Prim("==", e1, e2) // e1 is 14, e2 is 'a' + 3
 let e14 = Prim("-", e2, e13)
 
 let evale11 = eval1 e11 env;;
