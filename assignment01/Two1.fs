@@ -50,6 +50,9 @@ let e10 = Let("z", Prim("+", Let("x", CstI 4, Prim("+", Var "x", CstI 5)), Var "
 
 
 let e11 = Let1 ([("x1", CstI1 2); ("x2", CstI1 3)], Prim1("+", Var1 "x1", Var1 "x2"))
+let e12 = Let1([("x1", CstI1 2); ("x2", CstI1 0)], Prim1("-", Var1 "x1", Var1 "x2"))
+
+
 
 (* ---------------------------------------------------------------------- *)
 
@@ -79,14 +82,17 @@ let rec eval (e: expr) (env : (string * int) list) : int =
 let rec eval1 (e: expr1) (env : (string * int) list) : int =
     match e with
     | CstI1 (i: int)            -> i
-    | Var1 x             -> lookup env x 
+    | Var1 x             ->
+        lookup env x 
     | Let1(xlist, ebody) -> 
         let (x, erhs) = xlist.Head
         let xval = eval1 erhs env
         let env1 = (x, xval) :: env
         match xlist with
-        | [_, _] -> eval1 ebody env1
-        | _::_ -> eval1 (Let1(xlist.Tail, ebody)) env1
+        | [_, _] ->
+            eval1 ebody env1
+        | _::_ ->
+            eval1 (Let1(xlist.Tail, ebody)) env1
         | _ -> failwith "No let-bindings defined"
     | Prim1("+", e1, e2) -> eval1 e1 env + eval1 e2 env
     | Prim1("*", e1, e2) -> eval1 e1 env * eval1 e2 env
@@ -98,6 +104,6 @@ let res = List.map run [e1;e2;e3;e4;e5;e7]  (* e6 has free variables *)
 
 let run1 e = eval1 e [];;
 
-let res1 = List.map run1 [e11;]
+let res1 = List.map run1 [e11;e12]
 
 (* ---------------------------------------------------------------------- *)
