@@ -95,7 +95,7 @@ let rec fmt (e : aexpr1) : string =
 
 (*
   (iv)
-  Write an F# function simplify : aexpr -> aexpr to perform expres- sion simplification. 
+  Write an F# function simplify : aexpr -> aexpr to perform expression simplification. 
   For instance, it should simplify (x + 0) to x, and simplify (1 + 0) to 1. 
   The more ambitious student may want to simplify (1 + 0) ∗ (x + 0) to x. 
   Hint: Pattern matching is your friend. Hint: Don’t forget the case where you cannot 
@@ -108,8 +108,8 @@ let rec simplify (e : aexpr1) : aexpr1 =
     | Sub(e, CstI 0) -> e
     | Mul(CstI 1, e) -> e
     | Mul(e, CstI 1) -> e
-    | Mul(CstI 0, e) -> CstI 0
-    | Mul(e, CstI 0) -> CstI 0
+    | Mul(CstI 0, _) -> CstI 0
+    | Mul(_, CstI 0) -> CstI 0
     | Sub(e1, e2) when e1 = e2 -> CstI 0
     | _ -> e
 
