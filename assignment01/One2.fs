@@ -125,10 +125,11 @@ type dexpr =
   | Sub of dexpr * dexpr
   | Mul of dexpr * dexpr;;
 
-let rec diff e : dexpr =
-  match e with
-    | CstI i -> CstI i
-    | Var x -> Var x
-    | Add(e1, e2) -> Add(diff e1, diff e2)
-    | Sub(e1, e2) -> Sub(diff e1, diff e2)
-    | Mul(e1, e2) -> Add(Mul(diff e1, e2), Mul(e1, diff e2));;
+let rec diff (x: dexpr) (y: dexpr) : dexpr =
+  match y with
+    | CstI _ -> CstI 0
+    | y when x = y  -> CstI 1
+    | Add(e1, e2) -> Add(diff x e1, diff x e2)
+    | Sub(e1, e2) -> Sub(diff x e1, diff x e2)
+    | Mul(e1, e2) -> Add(Mul(diff x e1, e2), Mul(e1, diff x e2))
+    | _ -> CstI 0;;
