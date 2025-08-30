@@ -155,3 +155,12 @@ let rec eval3 (e: expr1) (env : (string * int) list) : int =
         | "max" -> if i1 >= i2 then i1 else i2
         | "==" -> if i1 = i2 then 1 else 0
         | _ -> failwith "unknown operator";;
+
+
+
+let e15 = If(Prim("==", CstI 1, CstI 1), CstI 1, CstI 0)
+let e16 = If(Prim("==", CstI 1, CstI 0), CstI 1, CstI 0)
+
+
+let eval3e15 = eval3 e15 env;;
+let eval3e16 = eval3 e16 env;;
