@@ -51,7 +51,9 @@ let e10 = Let("z", Prim("+", Let("x", CstI 4, Prim("+", Var "x", CstI 5)), Var "
 
 let e11 = Let1 ([("x1", CstI1 2); ("x2", CstI1 3)], Prim1("+", Var1 "x1", Var1 "x2"))
 let e12 = Let1([("x1", CstI1 2); ("x2", CstI1 0)], Prim1("-", Var1 "x1", Var1 "x2"))
+let e13 = Let1(["x1", Prim1("+", Var1 "x1", CstI1 7)], Prim1("+", Var1 "x1", CstI1 8))
 
+let e14 = Let1(["x1", Prim1("+", CstI1 5, CstI1 7); "x2", Prim1("*", Var1 "x1", CstI1 2)], Prim1("+", Var1 "x1", Var1 "x2"))
 
 
 (* ---------------------------------------------------------------------- *)
@@ -117,117 +119,6 @@ let rec mem x vs =
     | []      -> false
     | v :: vr -> x=v || mem x vr;;
 
-(* Checking whether an expression is closed.  The vs is 
-   a list of the bound variables.  *)
-
-let rec closedin (e : expr) (vs : string list) : bool =
-    match e with
-    | CstI i -> true
-    | Var x  -> List.exists (fun y -> x=y) vs
-    | Let(x, erhs, ebody) -> 
-      let vs1 = x :: vs 
-      closedin erhs vs && closedin ebody vs1
-    | Prim(ope, e1, e2) -> closedin e1 vs && closedin e2 vs;;
-
-(* An expression is closed if it is closed in the empty environment *)
-
-let closed1 e = closedin e [];;
-let _ = List.map closed1 [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
-
-(* ---------------------------------------------------------------------- *)
-
-(* Substitution of expressions for variables *)
-
-(* This version of lookup returns a Var(x) expression if there is no
-   pair (x,e) in the list env --- instead of failing with exception: *)
-
-let rec lookOrSelf env x =
-    match env with 
-    | []        -> Var x
-    | (y, e)::r -> if x=y then e else lookOrSelf r x;;
-
-(* Remove (x, _) from env: *)
-
-let rec remove env x =
-    match env with 
-    | []        -> []
-    | (y, e)::r -> if x=y then r else (y, e) :: remove r x;;
-
-(* Naive substitution, may capture free variables: *)
-
-let rec nsubst (e : expr) (env : (string * expr) list) : expr =
-    match e with
-    | CstI i -> e
-    | Var x  -> lookOrSelf env x
-    | Let(x, erhs, ebody) ->
-      let newenv = remove env x
-      Let(x, nsubst erhs env, nsubst ebody newenv)
-    | Prim(ope, e1, e2) -> Prim(ope, nsubst e1 env, nsubst e2 env)
-
-(* Some expressions with free variables: *)
-
-let e6s0 = Prim("+", Var "y", Var "z");;
-
-let e6s1 = nsubst e6s0 [("z", CstI 17)];;
-
-let e6s2 = nsubst e6s0 [("z", Prim("-", CstI 5, CstI 4))];;
-
-let e6s3 = nsubst e6s0 [("z", Prim("+", Var "z", Var "z"))];;
-
-// Shows that only z outside the Let gets substituted:
-let e7s0 = Prim("+", Let("z", CstI 22, Prim("*", CstI 5, Var "z")),
-                   Var "z");;
-
-let e7s1 = nsubst e7s0 [("z", CstI 100)];;
-
-// Shows that only the z in the Let rhs gets substituted
-let e8s0 = Let("z", Prim("*", CstI 22, Var "z"), Prim("*", CstI 5, Var "z"));;
-
-let e8s1 = nsubst e8s0 [("z", CstI 100)];;
-
-// Shows (wrong) capture of free variable z under the let:
-let e9s0 = Let("z", CstI 22, Prim("*", Var "y", Var "z"));;
-
-let e9s1 = nsubst e9s0 [("y", Var "z")];;
-
-// 
-let e9s2 = nsubst e9s0 [("z", Prim("-", CstI 5, CstI 4))];;
-
-let newVar : string -> string = 
-    let n = ref 0
-    let varMaker x = (n := 1 + !n; x + string (!n))
-    varMaker
-
-(* Correct, capture-avoiding substitution *)
-
-let rec subst (e : expr) (env : (string * expr) list) : expr =
-    match e with
-    | CstI i -> e
-    | Var x  -> lookOrSelf env x
-    | Let(x, erhs, ebody) ->
-      let newx = newVar x
-      let newenv = (x, Var newx) :: remove env x
-      Let(newx, subst erhs env, subst ebody newenv)
-    | Prim(ope, e1, e2) -> Prim(ope, subst e1 env, subst e2 env)
-
-let e6s1a = subst e6 [("z", CstI 17)];;
-
-let e6s2a = subst e6 [("z", Prim("-", CstI 5, CstI 4))];;
-
-let e6s3a = subst e6 [("z", Prim("+", Var "z", Var "z"))];;
-
-
-// Shows renaming of bound variable z (to z1)
-let e7s1a = subst e7s0 [("z", CstI 100)];;
-
-// Shows renaming of bound variable z (to z2)
-let e8s1a = subst e8s0 [("z", CstI 100)];;
-
-// Shows renaming of bound variable z (to z3), avoiding capture of free z
-let e9s1a = subst e9s0 [("y", Var "z")];;
-
-(* ---------------------------------------------------------------------- *)
-
 (* Free variables *)
 
 (* Operations on sets, represented as lists.  Simple but inefficient;
@@ -260,9 +151,36 @@ let rec freevars e : string list =
           union (freevars erhs, minus (freevars ebody, [x]))
     | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
 
+let rec freevars1 (e: expr1) : string list =
+    match e with
+    | CstI1 i -> []
+    | Var1 x  -> printfn "hej %A" x ; [x]
+    | Let1(xlist, ebody) ->
+        let (x, erhs) = xlist.Head
+        printfn "(name %A)" x
+        printfn "erhs %A" erhs
+        match xlist with
+        | [_, _] ->
+            printfn "left side %A" (freevars1 erhs)
+            printfn "right side %A" (minus (freevars1 ebody, [x]))
+            printfn "UNION %A" (union (freevars1 erhs, minus (freevars1 ebody, [x])))
+            union (freevars1 erhs, minus (freevars1 ebody, [x]))
+        | _::_ ->
+            printfn "UNIONBIG %A" (union (freevars1 erhs,
+                   minus ((union (freevars1(Let1(xlist.Tail, ebody)), freevars1 ebody), [x]))))
+            union (freevars1 erhs, minus (freevars1(Let1(xlist.Tail, ebody)), [x]))
+        | _ -> failwith "No let-bindings defined"
+    | Prim1(ope, e1, e2) -> union (freevars1 e1, freevars1 e2);;
+
+
+
 (* Alternative definition of closed *)
 
-let closed2 e = (freevars e = []);;
-let _ = List.map closed2 [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
+let closed e = (freevars e = []);;
+let hej1 = List.map closed [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
+
+
+let closed1 e = (freevars1 e = []);; 
+let hej = List.map closed1 [e11;e12;e13;e14] // False if there are free variables, true otherwise
 
 (* ---------------------------------------------------------------------- *)
