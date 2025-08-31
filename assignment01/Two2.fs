@@ -87,7 +87,7 @@ let rec eval1 (e: expr1) (env : (string * int) list) : int =
     | Var1 x             ->
         lookup env x 
     | Let1(xlist, ebody) -> 
-        let (x, erhs) = xlist.Head
+        let x, erhs = xlist.Head
         let xval = eval1 erhs env
         let env1 = (x, xval) :: env
         match xlist with
@@ -145,32 +145,26 @@ let rec minus (xs, ys) =
 
 let rec freevars e : string list =
     match e with
-    | CstI i -> []
+    | CstI _ -> []
     | Var x  -> [x]
     | Let(x, erhs, ebody) -> 
           union (freevars erhs, minus (freevars ebody, [x]))
-    | Prim(ope, e1, e2) -> union (freevars e1, freevars e2);;
+    | Prim(_, e1, e2) -> union (freevars e1, freevars e2);;
 
 let rec freevars1 (e: expr1) : string list =
     match e with
-    | CstI1 i -> []
-    | Var1 x  -> printfn "hej %A" x ; [x]
+    | CstI1 _ -> []
+    | Var1 x  -> [x]
     | Let1(xlist, ebody) ->
-        let (x, erhs) = xlist.Head
-        printfn "(name %A)" x
-        printfn "erhs %A" erhs
+        let x, erhs = xlist.Head
+
         match xlist with
         | [_, _] ->
-            printfn "left side %A" (freevars1 erhs)
-            printfn "right side %A" (minus (freevars1 ebody, [x]))
-            printfn "UNION %A" (union (freevars1 erhs, minus (freevars1 ebody, [x])))
             union (freevars1 erhs, minus (freevars1 ebody, [x]))
         | _::_ ->
-            printfn "UNIONBIG %A" (union (freevars1 erhs,
-                   minus ((union (freevars1(Let1(xlist.Tail, ebody)), freevars1 ebody), [x]))))
             union (freevars1 erhs, minus (freevars1(Let1(xlist.Tail, ebody)), [x]))
         | _ -> failwith "No let-bindings defined"
-    | Prim1(ope, e1, e2) -> union (freevars1 e1, freevars1 e2);;
+    | Prim1(_, e1, e2) -> union (freevars1 e1, freevars1 e2);;
 
 
 
