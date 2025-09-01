@@ -59,4 +59,4 @@ nunit-*.xml
 #
 *.class
 
-**/idea/
+**/.idea/
