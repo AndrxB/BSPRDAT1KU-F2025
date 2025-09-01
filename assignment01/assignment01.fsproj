@@ -8,5 +8,6 @@
         <Compile Include="One2.fs" />
         <Compile Include="Two1.fs" />
         <Compile Include="Two2.fs" />
+        <Compile Include="Two3.fs" />
     </ItemGroup>
 </Project>
