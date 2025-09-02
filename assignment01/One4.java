@@ -93,5 +93,8 @@ public class One4 {
         System.out.println(e1.toString());
         System.out.println(e2.toString());
         System.out.println(e3.toString());
+        System.out.println(new Var("Chuck").equals(new Var("Chuck")));
+        System.out.println(new Var("Chuck").equals(new Var("Chunky")));
+
     }
 }

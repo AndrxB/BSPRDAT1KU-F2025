@@ -85,7 +85,7 @@ let rec eval1 (e: expr1) (env : (string * int) list) : int =
     | Var1 x             ->
         lookup env x 
     | Let1(xlist, ebody) -> 
-        let (x, erhs) = xlist.Head
+        let (x, erhs) = xlist.Head // assumes list is not empty
         let xval = eval1 erhs env
         let env1 = (x, xval) :: env
         match xlist with
@@ -104,6 +104,6 @@ let res = List.map run [e1;e2;e3;e4;e5;e7]  (* e6 has free variables *)
 
 let run1 e = eval1 e [];;
 
-let res1 = List.map run1 [e11;e12]
+let res1 = List.map run1 [e11;e12];;
 
 (* ---------------------------------------------------------------------- *)

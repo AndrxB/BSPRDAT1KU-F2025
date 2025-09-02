@@ -7,8 +7,6 @@
 
 module Two2
 
-(* (i) Extend the expression language expr from Intcomp1.fs with
-multiple sequential let-bindings*)
 
 type expr1 =
     | CstI1 of int
@@ -151,13 +149,24 @@ let rec freevars e : string list =
           union (freevars erhs, minus (freevars ebody, [x]))
     | Prim(_, e1, e2) -> union (freevars e1, freevars e2);;
 
+
+
+(*Revise the function freevars : expr -> string list to
+work for the language as extended in Exercise 2.1. 
+Note that the example expression
+in the beginning of Exercise 2.1 has no free variables, but let x1 = x1+7 in
+x1+8 end has the free variable x1, 
+because the variable x1 is bound only in the
+body (x1+8), not in the right-hand side (x1+7), of its own binding. 
+There are programming languages where a variable can be used in the right-hand side of its
+own binding, but ours is not such a language.*)
+
 let rec freevars1 (e: expr1) : string list =
     match e with
     | CstI1 _ -> []
     | Var1 x  -> [x]
     | Let1(xlist, ebody) ->
         let x, erhs = xlist.Head
-
         match xlist with
         | [_, _] ->
             union (freevars1 erhs, minus (freevars1 ebody, [x]))
@@ -165,7 +174,6 @@ let rec freevars1 (e: expr1) : string list =
             union (freevars1 erhs, minus (freevars1(Let1(xlist.Tail, ebody)), [x]))
         | _ -> failwith "No let-bindings defined"
     | Prim1(_, e1, e2) -> union (freevars1 e1, freevars1 e2);;
-
 
 
 (* Alternative definition of closed *)

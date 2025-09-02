@@ -7,8 +7,7 @@
 
 module Two3
 
-(* (i) Extend the expression language expr from Intcomp1.fs with
-multiple sequential let-bindings*)
+
 
 type expr1 =
     | CstI1 of int
@@ -196,7 +195,7 @@ let rec getindex vs x =
     | []    -> failwith "Variable not found"
     | y::yr -> if x=y then 0 else 1 + getindex yr x;;
 
-(* iii *)
+(* 2.3 *)
 (* Compiling from expr to texpr *)
 
 let rec tcomp (e : expr1) (cenv : string list) : texpr =
@@ -206,10 +205,10 @@ let rec tcomp (e : expr1) (cenv : string list) : texpr =
     | Let1(xlist, ebody) ->
         let rhsRev, envFinal =
             List.fold (
-                    fun (rhsRev, envCur) (x, ei) ->
+                fun (rhsRev, envCur) (x, ei) ->
                     let ti = tcomp ei envCur
                     ti :: rhsRev, x :: envCur
-                ) ([], cenv) xlist
+            ) ([], cenv) xlist
         let tbody = tcomp ebody envFinal
         List.fold (fun acc ti -> TLet (ti, acc)) tbody rhsRev
     | Prim1(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
