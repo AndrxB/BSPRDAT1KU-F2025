@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="One1.fs" />
+        <Compile Include="One2.fs" />
+        <Compile Include="Two1.fs" />
+        <Compile Include="Two2.fs" />
+        <Compile Include="Two3.fs" />
+    </ItemGroup>
+</Project>
