@@ -4,6 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="Two4.fs" />
         <PackageReference Include="FsLexYacc" Version="11.3.0" />
         <PackageReference Include="FsLexYacc.Runtime" Version="11.3.0" />
     </ItemGroup>
