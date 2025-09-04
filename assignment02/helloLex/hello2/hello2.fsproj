@@ -4,13 +4,13 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Compile Include="hello1.fs"/>
-    </ItemGroup>
     
     <ItemGroup>
-    <Reference Include="../../../fsLexer/FsLexYacc.Runtime.11.3.0/lib/netstandard2.0/FsLexYacc.Runtime.dll" />
+        <Compile Include="hello2.fs"/>
+
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="../../../fsLexer/FsLexYacc.Runtime.11.3.0/lib/netstandard2.0/FsLexYacc.Runtime.dll" />
     </ItemGroup>
 
 </Project>
