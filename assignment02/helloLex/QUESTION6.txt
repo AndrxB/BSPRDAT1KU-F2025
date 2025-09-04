@@ -1,0 +1,29 @@
+﻿Consider the 3 examples of input provided at the prompt and
+the result.
+Explain why the results are expected behaviour from the lexer.
+
+
+hello3 recognizes floats and integers. 
+
+This means that 34 should pass, since it is an integer.
+34 passes, because the regex is partly [0-9]+.
+This part means that the regex allows 1 or more digits from
+0 to 9.
+
+Example 2
+hello3 uses '.' instead of ',' as a
+decimal separator. This allows for the entirety of 34.24
+to be recognized.
+The part "([0-9]*[.])?[0-9]+" of hello3 defines that
+there at least has to be one digit present, but as soon as
+a '.' is placed in front, those digits become decimals.
+As shown in the regex above, whole numbers are completely
+optional whenever a '.' is placed.
+You could write '.24' and it would still be recognized. 
+
+Example 3
+
+The decimals and the decimal separator are both excluded
+from the recognition, because ',' is not legal according
+to the regex defined for hello3.
+34 is still recognized for the same reason as example 1.
