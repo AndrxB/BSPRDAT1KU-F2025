@@ -18,11 +18,11 @@ Grammar rules:
 let z = (17) in z + 2 * 3 end EOF
 
 1: A | Expr EOF
-2: F | let Name "z" = Expr in Expr end EOF
-3: H | let Name "z" = Expr in Expr + Expr end EOF
-4: G | let Name "z" = Expr in Expr + Expr * Expr end EOF
-5: C | let Name "z" = Expr in Expr + Expr * CSTINT 3 end EOF
-6: C | let Name "z" = Expr in Expr + CSTINT 2 * CSTINT 3 end EOF
-7: B | let Name "z" = Expr in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
-8: E | let Name "z" = ( Expr ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
-9: C | let Name "z" = ( CSTINT 17 ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
+2: F | let NAME "z" = Expr in Expr end EOF
+3: H | let NAME "z" = Expr in Expr + Expr end EOF
+4: G | let NAME "z" = Expr in Expr + Expr * Expr end EOF
+5: C | let NAME "z" = Expr in Expr + Expr * CSTINT 3 end EOF
+6: C | let NAME "z" = Expr in Expr + CSTINT 2 * CSTINT 3 end EOF
+7: B | let NAME "z" = Expr in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
+8: E | let NAME "z" = ( Expr ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
+9: C | let NAME "z" = ( CSTINT 17 ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
