@@ -1,0 +1,28 @@
+﻿
+Exercise 3.3 Write out the rightmost derivation of the string below from the ex-
+pression grammar at the end of Sect. 3.6.6, corresponding to ExprPar.fsy. Take
+
+note of the sequence of grammar rules (A–I) used.
+
+Grammar rules:
+    Main ::= Expr EOF                 (rule A)
+    Expr ::= NAME                     (rule B)
+        | CSTINT                      (rule C)
+        | - CSTINT                    (rule D)
+        | ( Expr )                    (rule E)
+        | let NAME = Expr in Expr end (rule F)
+        | Expr * Expr                 (rule G)
+        | Expr + Expr                 (rule H)
+        | Expr - Expr                 (rule I)
+
+let z = (17) in z + 2 * 3 end EOF
+
+1: A | Expr EOF
+2: F | let Name "z" = Expr in Expr end EOF
+3: H | let Name "z" = Expr in Expr + Expr end EOF
+4: G | let Name "z" = Expr in Expr + Expr * Expr end EOF
+5: C | let Name "z" = Expr in Expr + Expr * CSTINT 3 end EOF
+6: C | let Name "z" = Expr in Expr + CSTINT 2 * CSTINT 3 end EOF
+7: B | let Name "z" = Expr in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
+8: E | let Name "z" = ( Expr ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
+9: C | let Name "z" = ( CSTINT 17 ) in NAME "z" + CSTINT 2 * CSTINT 3 end EOF
