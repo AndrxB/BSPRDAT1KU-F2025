@@ -5,7 +5,7 @@
 
 module ExprLex
 
-open Microsoft.FSharp.Text.Lexing
+open FSharp.Text.Lexing
 open ExprPar
 
 let lexemeAsString lexbuf = 
@@ -19,6 +19,9 @@ let keyword s =
     | "let" -> LET
     | "in"  -> IN
     | "end" -> END
+    | "if"   -> IF (* Exercise 3.7 *)
+    | "then" -> THEN (* Exercise 3.7 *)
+    | "else" -> ELSE (* Exercise 3.7 *)
     | _     -> NAME s
 }
 

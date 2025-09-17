@@ -1,5 +1,5 @@
 
-# 1 "assignment03/Three5/ExprLex.fsl"
+# 1 "./assignment03/Three5/ExprLex.fsl"
  
 (* File Expr/Exprlex.fsl
    Lexer specification for the simple expression language.
@@ -21,9 +21,12 @@ let keyword s =
     | "let" -> LET
     | "in"  -> IN
     | "end" -> END
+    | "if"   -> IF (* Exercise 3.7 *)
+    | "then" -> THEN (* Exercise 3.7 *)
+    | "else" -> ELSE (* Exercise 3.7 *)
     | _     -> NAME s
 
-# 26 "assignment03/Three5/ExprLex.fs"
+# 29 "./assignment03/Three5/ExprLex.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -64,65 +67,65 @@ let rec _fslex_dummy () = _fslex_dummy()
 and Token  lexbuf =
   match _fslex_tables.Interpret(0,lexbuf) with
   | 0 -> ( 
-# 26 "assignment03/Three5/ExprLex.fsl"
+# 29 "./assignment03/Three5/ExprLex.fsl"
                                      Token lexbuf 
-# 69 "assignment03/Three5/ExprLex.fs"
+# 72 "./assignment03/Three5/ExprLex.fs"
           )
   | 1 -> ( 
-# 27 "assignment03/Three5/ExprLex.fsl"
+# 30 "./assignment03/Three5/ExprLex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf 
-# 74 "assignment03/Three5/ExprLex.fs"
+# 77 "./assignment03/Three5/ExprLex.fs"
           )
   | 2 -> ( 
-# 28 "assignment03/Three5/ExprLex.fsl"
+# 31 "./assignment03/Three5/ExprLex.fsl"
                                      CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) 
-# 79 "assignment03/Three5/ExprLex.fs"
+# 82 "./assignment03/Three5/ExprLex.fs"
           )
   | 3 -> ( 
-# 30 "assignment03/Three5/ExprLex.fsl"
+# 33 "./assignment03/Three5/ExprLex.fsl"
                                      keyword (lexemeAsString lexbuf) 
-# 84 "assignment03/Three5/ExprLex.fs"
+# 87 "./assignment03/Three5/ExprLex.fs"
           )
   | 4 -> ( 
-# 31 "assignment03/Three5/ExprLex.fsl"
+# 34 "./assignment03/Three5/ExprLex.fsl"
                                      PLUS  
-# 89 "assignment03/Three5/ExprLex.fs"
+# 92 "./assignment03/Three5/ExprLex.fs"
           )
   | 5 -> ( 
-# 32 "assignment03/Three5/ExprLex.fsl"
+# 35 "./assignment03/Three5/ExprLex.fsl"
                                      MINUS 
-# 94 "assignment03/Three5/ExprLex.fs"
+# 97 "./assignment03/Three5/ExprLex.fs"
           )
   | 6 -> ( 
-# 33 "assignment03/Three5/ExprLex.fsl"
+# 36 "./assignment03/Three5/ExprLex.fsl"
                                      TIMES 
-# 99 "assignment03/Three5/ExprLex.fs"
+# 102 "./assignment03/Three5/ExprLex.fs"
           )
   | 7 -> ( 
-# 34 "assignment03/Three5/ExprLex.fsl"
+# 37 "./assignment03/Three5/ExprLex.fsl"
                                      EQ    
-# 104 "assignment03/Three5/ExprLex.fs"
+# 107 "./assignment03/Three5/ExprLex.fs"
           )
   | 8 -> ( 
-# 35 "assignment03/Three5/ExprLex.fsl"
+# 38 "./assignment03/Three5/ExprLex.fsl"
                                      LPAR  
-# 109 "assignment03/Three5/ExprLex.fs"
+# 112 "./assignment03/Three5/ExprLex.fs"
           )
   | 9 -> ( 
-# 36 "assignment03/Three5/ExprLex.fsl"
+# 39 "./assignment03/Three5/ExprLex.fsl"
                                      RPAR  
-# 114 "assignment03/Three5/ExprLex.fs"
+# 117 "./assignment03/Three5/ExprLex.fs"
           )
   | 10 -> ( 
-# 37 "assignment03/Three5/ExprLex.fsl"
+# 40 "./assignment03/Three5/ExprLex.fsl"
                                      EOF   
-# 119 "assignment03/Three5/ExprLex.fs"
+# 122 "./assignment03/Three5/ExprLex.fs"
           )
   | 11 -> ( 
-# 38 "assignment03/Three5/ExprLex.fsl"
+# 41 "./assignment03/Three5/ExprLex.fsl"
                                      failwith "Lexer error: illegal symbol" 
-# 124 "assignment03/Three5/ExprLex.fs"
+# 127 "./assignment03/Three5/ExprLex.fs"
           )
   | _ -> failwith "Token"
 
-# 3000000 "assignment03/Three5/ExprLex.fs"
+# 3000000 "./assignment03/Three5/ExprLex.fs"

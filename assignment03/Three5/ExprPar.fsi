@@ -2,6 +2,9 @@
 module ExprPar
 type token = 
   | EOF
+  | IF
+  | THEN
+  | ELSE
   | LPAR
   | RPAR
   | END
@@ -16,6 +19,9 @@ type token =
   | CSTINT of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_IF
+    | TOKEN_THEN
+    | TOKEN_ELSE
     | TOKEN_LPAR
     | TOKEN_RPAR
     | TOKEN_END
