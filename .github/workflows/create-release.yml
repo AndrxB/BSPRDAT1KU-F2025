@@ -2,7 +2,7 @@ name: Create Release from Assignment Folder
 
 on:
   push:
-    branches: [ test ]
+    branches: [ main ]
 
 jobs:
   create-release:
@@ -52,4 +52,5 @@ jobs:
           
           Contains files from: ${{ steps.find-assignment.outputs.folder_name }}
       env:
+
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
