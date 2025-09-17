@@ -7,7 +7,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment01", "assignment0
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment02", "assignment02\assignment02.fsproj", "{9ABEF36A-1CD2-4A57-B671-A22B60DE2A0A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment03", "assignment03\assignment03.fsproj", "{6CA01E45-4EBB-414C-A288-6BFB07F057C9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment03", "assignment03\Three5\assignment03.fsproj", "{6CA01E45-4EBB-414C-A288-6BFB07F057C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
