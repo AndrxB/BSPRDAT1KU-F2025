@@ -4,11 +4,11 @@
         <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-    <Compile Include="Absyn.fs" />
-    <Compile Include="Expr.fs" />
-    <Compile Include="ExprLex.fsl" />
-    <Compile Include="ExprPar.fsy" />
-    <Content Include="Three3.txt" />
-    <Compile Include="Parse.fs" />
+        <Compile Include="assignment03/Three5/Absyn.fs" />
+        <Compile Include="assignment03/Three5/Expr.fs" />
+        <Compile Include="assignment03/Three5/ExprLex.fsl" />
+        <Compile Include="assignment03/Three5/ExprPar.fsy" />
+        <Content Include="assignment03/Three5/Three3.txt" />
+        <Compile Include="assignment03/Three5/Parse.fs" />
     </ItemGroup>
 </Project>

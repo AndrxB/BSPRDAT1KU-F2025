@@ -341,4 +341,4 @@ Expr.fs, to define a function compString : string -> sinstr list
 that parses a string as an expression and compiles it to stack machine code.
  *)
 let compString (s: string): sinstr list = 
-  scomp (fromString s) []
+  scomp (fromString s) [];;
