@@ -60,3 +60,4 @@ nunit-*.xml
 *.class
 
 **/.idea/
+**/*.zip
