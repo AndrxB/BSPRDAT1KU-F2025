@@ -1,0 +1,55 @@
+name: Create Release from Assignment Folder
+
+on:
+  push:
+    branches: [ test ]
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Find latest assignment folder
+      id: find-assignment
+      run: |
+        # Find all assignment folders and extract the highest version number
+        highest_version=$(find . -maxdepth 1 -type d -name 'assignment*' | grep -Eo '[0-9]+' | sort -nr | head -n 1)
+        
+        # If no assignment folders found, exit with error
+        if [ -z "$highest_version" ]; then
+          echo "❌ No assignment folders found"
+          exit 1
+        fi
+        
+        # Format version with leading zero if needed
+        formatted_version=$(printf "%02d" $highest_version)
+        echo "Found highest version: assignment$formatted_version"
+        
+        # Set outputs for later steps
+        echo "version=$highest_version" >> $GITHUB_OUTPUT
+        echo "folder_name=assignment$formatted_version" >> $GITHUB_OUTPUT
+        echo "zip_name=BPRD-${highest_version}-AndreBirk-AndreasNielsen-LukasVranic.zip" >> $GITHUB_OUTPUT
+
+    - name: Create zip file
+      run: |
+        cd "${{ steps.find-assignment.outputs.folder_name }}"
+        zip -r "../${{ steps.find-assignment.outputs.zip_name }}" ./*
+        cd ..
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ steps.find-assignment.outputs.zip_name }}
+        tag_name: v${{ steps.find-assignment.outputs.version }}
+        name: Release v${{ steps.find-assignment.outputs.version }}
+        body: |
+          Automatic release for assignment ${{ steps.find-assignment.outputs.version }}
+          
+          Contains files from: ${{ steps.find-assignment.outputs.folder_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
