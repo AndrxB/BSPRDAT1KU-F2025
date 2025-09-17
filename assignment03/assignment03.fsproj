@@ -9,5 +9,6 @@
     <Compile Include="ExprLex.fsl" />
     <Compile Include="ExprPar.fsy" />
     <Content Include="Three3.txt" />
+    <Compile Include="Parse.fs" />
     </ItemGroup>
 </Project>
