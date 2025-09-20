@@ -18,7 +18,8 @@
 %token EOF
 
 %left ELSE              /* lowest precedence  */
-%left AND OR
+%left OR
+%left AND
 %left EQ NE 
 %left GT LT GE LE 
 %left PLUS MINUS
