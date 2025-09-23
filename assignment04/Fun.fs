@@ -24,7 +24,7 @@ let rec lookup env x =
 
 type value = 
   | Int of int
-  | Closure of string * string * expr * value env       (* (f, x, fBody, fDeclEnv) *)
+  | Closure of string * string list * expr * value env       (* (f, x, fBody, fDeclEnv) *)
 
 let rec eval (e : expr) (env : value env) : int =
     match e with 
@@ -52,19 +52,21 @@ let rec eval (e : expr) (env : value env) : int =
       let b = eval e1 env
       if b<>0 then eval e2 env
       else eval e3 env
-    | Letfun(f, x, fBody, letBody) -> 
-      let bodyEnv = (f, Closure(f, x, fBody, env)) :: env 
+    | Letfun(f, xs, fBody, letBody) ->
+      let bodyEnv = (f, Closure(f, xs, fBody, env)) :: env
       eval letBody bodyEnv
-    | Call(Var f, eArg) -> 
+    | Call(Var f, eArgs) -> 
       let fClosure = lookup env f
+      let argVals = List.map (fun arg -> Int(eval arg env)) eArgs
       match fClosure with
-      | Closure (f, x, fBody, fDeclEnv) ->
-        let xVal = Int(eval eArg env)
-        let fBodyEnv = (x, xVal) :: (f, fClosure) :: fDeclEnv
+      | Closure(f, xs, fBody, fDeclEnv) ->
+        let bindings = List.zip xs argVals
+        let fBodyEnv = bindings @ [(f, fClosure)] @ fDeclEnv
         eval fBody fBodyEnv
       | _ -> failwith "eval Call: not a function"
     | Call _ -> failwith "eval Call: not first-order function"
 
+(*
 (* Evaluate in empty environment: program must have no free variables: *)
 
 let run e = eval e [];;
@@ -112,5 +114,6 @@ let ex5 =
                      Prim("+",
                           Call(Var "fib", Prim("-", Var "n", CstI 1)),
                           Call(Var "fib", Prim("-", Var "n", CstI 2))),
-                     CstI 1), Call(Var "fib", CstI 25)));;
+                     CstI 1), Call(Var "fib", CstI 25)));;0
+*)
                      
