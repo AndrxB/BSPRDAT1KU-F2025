@@ -16,7 +16,7 @@
         </FsLex>
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup><Compile Include="FunLex.fsi" />
         <Compile Include="Absyn.fs" />
         <Compile Include="Fun.fs" />
         <Compile Include="Expr.fs" />
