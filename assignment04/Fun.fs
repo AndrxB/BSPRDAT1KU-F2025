@@ -56,11 +56,23 @@ let rec eval (e : expr) (env : value env) : int =
       let bodyEnv = (f, Closure(f, xs, fBody, env)) :: env
       eval letBody bodyEnv
     | Call(Var f, eArgs) -> 
+      // lookup the closure for the function name "f" in the given environment "env" 
       let fClosure = lookup env f
-      let argVals = List.map (fun arg -> Int(eval arg env)) eArgs
       match fClosure with
+      (*
+        Closure(
+          f         : function name. 
+          xs        : list of arguments for the function.
+          fBody     : function body.
+          fDeclEnv  : Call-By-Value environment when the function was called.
+        )
+      *)
       | Closure(f, xs, fBody, fDeclEnv) ->
+        // Retrieve the values for the arguments "eArgs" in the runtime.
+        let argVals = List.map (fun arg -> Int(eval arg env)) eArgs
+        // Create association list for (varible, value); A mapping.
         let bindings = List.zip xs argVals
+        // Extend the declared environment with association list.
         let fBodyEnv = bindings @ [(f, fClosure)] @ fDeclEnv
         eval fBody fBodyEnv
       | _ -> failwith "eval Call: not a function"
