@@ -61,3 +61,6 @@ nunit-*.xml
 
 **/.idea/
 **/*.zip
+
+# Mac User
+.DS_Store
