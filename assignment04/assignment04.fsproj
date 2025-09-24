@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <FsYacc Include="ExprPar.fsy">
+            <OtherFlags>--module ExprPar</OtherFlags>
+        </FsYacc>
+        <FsLex Include="ExprLex.fsl">
+            <OtherFlags>--unicode</OtherFlags>
+        </FsLex>
+    </ItemGroup>
+
+    <ItemGroup><Compile Include="FunLex.fsi" />
+        <Compile Include="Absyn.fs" />
+        <Compile Include="Fun.fs" />
+        <Compile Include="Expr.fs" />
+        <!-- Generated files (order matters!) -->
+        <Compile Include="ExprPar.fsi" />
+        <Compile Include="ExprPar.fs" />
+        <Compile Include="ExprLex.fs" />
+        <Compile Include="Parse.fs" />
+    </ItemGroup>
+
+    <Target Name="CleanGeneratedFiles" BeforeTargets="Clean">
+        <Delete Files="$(MSBuildProjectDirectory)/ExprLex.fs" />
+        <Delete Files="$(MSBuildProjectDirectory)/ExprPar.fs" />
+        <Delete Files="$(MSBuildProjectDirectory)/ExprPar.fsi" />
+    </Target>
+</Project>
