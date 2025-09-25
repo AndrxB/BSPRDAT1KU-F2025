@@ -1,35 +1,34 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-static class MergeSortFive1
-{
-    static int[] Merge(int[] xs, int[] ys)
-    {
-        int[] tmp = new int[xs.Length + ys.Length];
-        int x = 0, y = 0, i = 0;
-        while (y < ys.Length && x < xs.Length) tmp[i++] = xs[x] < ys[y] ? xs[x++] : ys[y++];
-        while (x < xs.Length) tmp[i++] = xs[x++];
-        while (y < ys.Length) tmp[i++] = ys[y++];
-        return tmp;
-    }
-    static void Main(string[] _)
-    {
-        static void Test(int[] xs, int[] ys)
-        {
-            foreach (var i in Merge(xs, ys))
-            {
-                Console.Write(i + " ");
-            }
-            Console.WriteLine();
-        }
-        int[] i1 = [3, 4, 12];
-        int[] i2 = [2, 3, 5, 7];
-        int[] i3 = [0, 1, 8, 9];
-        int[] i4 = [-1, -8, 0, 69];
 
-        Test(i1, i2);
-        Test(i2, i3);
-        Test(i3, i4);
-    }
+static T[] Merge<T>(T[] xs, T[] ys) where T : IComparable<T>
+{
+    T[] arr = new T[xs.Length + ys.Length];
+    // Variables for tracking indexes 
+    int x = 0, y = 0, i = 0;
+    while (y < ys.Length && x < xs.Length)
+        // Since both arrays extends IComparable, 
+        // we use the .CompareTo method rather than equality.
+        arr[i++] = xs[x].CompareTo(ys[y]) > 0 ? xs[x++] : ys[y++];
+    // Append the rest of the non-empty array into the final arr
+    while (x < xs.Length) arr[i++] = xs[x++];
+    while (y < ys.Length) arr[i++] = ys[y++];
+    return arr;
 }
+
+static void Test<T>(T[] xs, T[] ys) where T : IComparable<T> =>
+    Merge(xs, ys).ToList().ForEach(k => Console.Write(k)); Console.WriteLine();
+
+// Tests
+int[] i1 = [3, 4, 12];
+int[] i2 = [2, 3, 5, 7];
+bool[] b1 = [false, false, true];
+bool[] b2 = [false, true, true];
+char[] c1 = ['a', 'b', 'c', 'q', 'z'];
+
+Test(i1, i2);
+Test(i2, i1);
+Test(b1, b2);
+Test(b2, b1);
+Test(c1, c1);
