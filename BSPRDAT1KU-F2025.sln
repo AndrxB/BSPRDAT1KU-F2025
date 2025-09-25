@@ -13,6 +13,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment04", "assignment0
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "assignment05", "assignment05\assignment05.fsproj", "{3DB88A80-A86A-47FA-B62E-123AC751F776}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assignment05", "assignment05", "{4C8B7A9B-C608-B433-F906-C891C02A3AE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "merge-sort", "assignment05\merge-sort.csproj", "{2573E86D-70C0-4658-B870-A40FCC4ACABE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,8 +87,23 @@ Global
 		{3DB88A80-A86A-47FA-B62E-123AC751F776}.Release|x64.Build.0 = Release|Any CPU
 		{3DB88A80-A86A-47FA-B62E-123AC751F776}.Release|x86.ActiveCfg = Release|Any CPU
 		{3DB88A80-A86A-47FA-B62E-123AC751F776}.Release|x86.Build.0 = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|x64.Build.0 = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Debug|x86.Build.0 = Debug|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|x64.ActiveCfg = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|x64.Build.0 = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|x86.ActiveCfg = Release|Any CPU
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2573E86D-70C0-4658-B870-A40FCC4ACABE} = {4C8B7A9B-C608-B433-F906-C891C02A3AE6}
 	EndGlobalSection
 EndGlobal
