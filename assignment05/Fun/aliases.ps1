@@ -20,4 +20,8 @@ function fsihigher {
     dotnet fsi Absyn.fs HigherFun.fs @args
 }
 
-Write-Host "F# aliases loaded: fslex, fsyacc, fsi, fsiforreal, fsihigher" -ForegroundColor Green
+function fsiskyhigh {
+    dotnet fsi -r ..\../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll Util.fs Absyn.fs FunPar.fs FunLex.fs Parse.fs HigherFun.fs ParseAndRunHigher.fs @args
+}
+
+Write-Host "F# aliases loaded: fslex, fsyacc, fsi, fsiforreal, fsihigher, fsiskyhigh" -ForegroundColor Green
