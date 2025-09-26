@@ -1,0 +1,78 @@
+﻿Exercise 6.1 
+Download and unpack fun1.zip and fun2.zip and build the
+micro-ML higher-order evaluator as described in file README.TXT point E.
+Then run the evaluator on the following four programs. Is the result of the third
+one as expected? Explain the result of the last one:
+
+
+let f x = 1
+in f f end
+
+RESULT: "Int"
+Type: Int
+
+
+let f g = g g
+in f end
+
+RESULT: Error, circularity
+TYPE = The program cannot calculate the type, 
+because calling g with g causes a unification error 
+when trying to unify 'a' with 'a -> b'. 
+These two types cannot be unified, because 'a' occurs in 'a -> b'
+
+let f x =
+    let g y = y
+    in g false end
+in f 42 end
+
+RESULT: "bool"
+Type: Bool
+
+let f x =
+    let g y = if true then y else x
+    in g false end
+in f 42 end
+
+RESULT: Error, bool and int
+On line two the program can either return y or x,
+but the variables have different types, causing the error.
+
+let f x =
+    let g y = if true then y else x
+    in g false end
+in f true end
+
+RESULT: "bool"
+This program is similar to the one above, however, f takes a boolean instead,
+making the variables; y and x the same type.
+
+
+Write micro-ML programs for which the micro-ML type inference report the
+following types:
+
+• bool -> bool
+let f x = if x then true else false in f end
+
+• int -> int
+let f x = if x=1 then 1 else 0 in f end
+
+• int -> int -> int
+let f x = let g y = x+y in g end in f end
+
+• ’a -> ’b -> ’a
+let f x = let g y = x in g end in f end
+
+• ’a -> ’b -> ’b
+let f x = let g y = y in g end in f end
+
+• (’a -> ’b) -> (’b -> ’c) -> (’a -> ’c)
+
+let f x = let g y = let h z = y (x z) in h end in g end in f end
+
+• ’a -> ’b
+
+let f x = let g y = y  in g f x end in f end
+
+• ’a
+let f x = let g y = y in f g end in f f end
