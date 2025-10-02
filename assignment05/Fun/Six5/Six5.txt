@@ -36,7 +36,7 @@ in f 42 end
 
 RESULT: Error, bool and int
 On line two the program can either return y or x,
-but the variables have different types, causing the error.
+but the variables are assigned to values with different types, causing the error.
 
 let f x =
     let g y = if true then y else x
