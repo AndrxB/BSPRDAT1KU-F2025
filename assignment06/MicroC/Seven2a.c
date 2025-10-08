@@ -10,13 +10,13 @@ void main(int m) {
     
     int *sum;
     *sum = 0;
-    arrsum(4, arr, sum);
+    arrsum(arr, sum);
     print *sum;
     
 }
 
 void arrsum(int n,int arr[], int *sump){
-
+    
     int count;
     count = 0;
     while (count < n) {
