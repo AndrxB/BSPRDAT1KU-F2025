@@ -21,6 +21,8 @@ type token =
   | IF
   | IN
   | LET
+  | ARROW
+  | FUN
   | NOT
   | THEN
   | TRUE
@@ -48,6 +50,8 @@ type tokenId =
     | TOKEN_IF
     | TOKEN_IN
     | TOKEN_LET
+    | TOKEN_ARROW
+    | TOKEN_FUN
     | TOKEN_NOT
     | TOKEN_THEN
     | TOKEN_TRUE
