@@ -10,7 +10,7 @@ void main(int m) {
     
     int *sum;
     *sum = 0;
-    arrsum(arr, sum);
+    arrsum(4, arr, sum);
     print *sum;
     
 }
