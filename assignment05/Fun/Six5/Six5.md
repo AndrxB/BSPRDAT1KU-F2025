@@ -1,0 +1,104 @@
+﻿Exercise 6.5 Download fun2.zip and build the micro-ML higher-order type in-
+ference as described in file README.TXT point F.
+
+(1) Use the type inference on the micro-ML programs shown below, and report
+what type the program has. Some of the type inferences will fail because the
+programs are not typable in micro-ML; in those cases, explain why the program
+is not typable:
+
+```fs
+let f x = 1
+in f f end
+```
+
+RESULT: "Int"
+Type: Int
+
+```fs
+let f g = g g
+in f end
+```
+
+
+RESULT: Error, circularity
+TYPE = The program cannot calculate the type, 
+because calling g with g causes a unification error 
+when trying to unify 'a' with 'a -> b'. 
+These two types cannot be unified, because 'a' occurs in 'a -> b'
+
+```fs
+let f x =
+    let g y = y
+    in g false end
+in f 42 end
+```
+
+RESULT: "bool"
+Type: Bool
+
+```fs
+let f x =
+    let g y = if true then y else x
+    in g false end
+in f 42 end
+```
+
+RESULT: Error, bool and int
+On line two the program can either return y or x,
+but the variables are assigned to values with different types, causing the error.
+
+```fs
+let f x =
+    let g y = if true then y else x
+    in g false end
+in f true end
+```
+
+
+RESULT: "bool"
+This program is similar to the one above, however, f takes a boolean instead,
+making the variables; y and x the same type.
+
+
+Write micro-ML programs for which the micro-ML type inference report the
+following types:
+
+* bool -> bool
+```fs
+let f x = if x then true else false in f end
+```
+
+* int -> int
+```fs
+let f x = if x=1 then 1 else 0 in f end
+```
+
+* int -> int -> int
+```fs
+let f x = let g y = x+y in g end in f end
+```
+
+* ’a -> ’b -> ’a
+```fs
+let f x = let g y = x in g end in f end
+```
+
+* ’a -> ’b -> ’b
+```fs
+let f x = let g y = y in g end in f end
+```
+* (’a -> ’b) -> (’b -> ’c) -> (’a -> ’c)
+
+```fs
+let f x = let g y = let h z = y (x z) in h end in g end in f end
+```
+
+* ’a -> ’b
+```fs
+let f x = let g y = y  in g f x end in f end
+```
+
+* ’a
+```fs
+let f x = let g y = y in f g end in f f end
+```
