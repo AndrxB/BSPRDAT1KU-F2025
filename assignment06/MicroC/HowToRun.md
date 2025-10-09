@@ -7,5 +7,5 @@ For powershell
 
 For bash:
 ```bash
-souce ./alias.sh
+source ./alias.sh
 ```

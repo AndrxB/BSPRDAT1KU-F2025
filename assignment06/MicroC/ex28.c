@@ -2,5 +2,6 @@
 
 void main() {
   int i;
-  i = ++i;
+  i = 0;
+  ++i;
 }
