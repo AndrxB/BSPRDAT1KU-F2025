@@ -1,9 +1,10 @@
-﻿Exercise 6.1 
-Download and unpack fun1.zip and fun2.zip and build the
-micro-ML higher-order evaluator as described in file README.TXT point E.
-Then run the evaluator on the following four programs. Is the result of the third
-one as expected? Explain the result of the last one:
+﻿Exercise 6.5 Download fun2.zip and build the micro-ML higher-order type in-
+ference as described in file README.TXT point F.
 
+(1) Use the type inference on the micro-ML programs shown below, and report
+what type the program has. Some of the type inferences will fail because the
+programs are not typable in micro-ML; in those cases, explain why the program
+is not typable:
 
 let f x = 1
 in f f end
