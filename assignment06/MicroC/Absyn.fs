@@ -28,6 +28,9 @@ and access =
   | AccVar of string                 (* Variable access        x    *) 
   | AccDeref of expr                 (* Pointer dereferencing  *p   *)
   | AccIndex of access * expr        (* Array indexing         a[e] *)
+  | PreInc of access                 (* C/C++/Java/C# ++i or ++a[e] *) // added this
+  | PreDec of access                 (* C/C++/Java/C# --i or --a[e] *) // added this
+  
                                                                    
 and stmt =                                                         
   | If of expr * stmt * stmt         (* Conditional                 *)
