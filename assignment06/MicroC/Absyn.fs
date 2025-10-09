@@ -23,13 +23,13 @@ and expr =
   | Andalso of expr * expr           (* Sequential and              *)
   | Orelse of expr * expr            (* Sequential or               *)
   | Call of string * expr list       (* Function call f(...)        *)
+  | PreInc of access                 (* C/C++/Java/C# ++i or ++a[e] *) // added this
+  | PreDec of access                 (* C/C++/Java/C# --i or --a[e] *) // added this
                                                                    
 and access =                                                       
   | AccVar of string                 (* Variable access        x    *) 
   | AccDeref of expr                 (* Pointer dereferencing  *p   *)
   | AccIndex of access * expr        (* Array indexing         a[e] *)
-  | PreInc of access                 (* C/C++/Java/C# ++i or ++a[e] *) // added this
-  | PreDec of access                 (* C/C++/Java/C# --i or --a[e] *) // added this
   
                                                                    
 and stmt =                                                         

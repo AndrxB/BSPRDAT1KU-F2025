@@ -30,7 +30,7 @@ let keyword s =
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
     | "while"   -> WHILE
-    | "for"     -> FORLOOP
+    | "for"     -> FORLOOP (* Added this *)
     | _         -> NAME s
  
 let cEscape s = 
