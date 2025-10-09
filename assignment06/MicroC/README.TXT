@@ -26,6 +26,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
    run (fromFile "ex27.c") [];;
 
    open ParseAndRun;;
+   run (fromFile "ex28.c") [];;
    
 
 
