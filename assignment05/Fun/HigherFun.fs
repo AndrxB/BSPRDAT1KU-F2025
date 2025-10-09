@@ -60,7 +60,7 @@ let rec eval (e : expr) (env : value env) : value =
     | Letfun(f, x, fBody, letBody) -> 
       let bodyEnv = (f, Closure(f, x, fBody, env)) :: env
       eval letBody bodyEnv
-    | Fun(p, b) -> Clos(p, b, env) (* Exercise 6.2 *)
+    | Fun(x, fBody) -> Clos(x, fBody, env) (* Exercise 6.2 *)
     | Call(eFun, eArg) -> 
       let fClosure = eval eFun env  (* Different from Fun.fs - to enable first class functions *)
       match fClosure with
@@ -68,10 +68,10 @@ let rec eval (e : expr) (env : value env) : value =
         let xVal = eval eArg env
         let fBodyEnv = (x, xVal) :: (f, fClosure) :: fDeclEnv
         in eval fBody fBodyEnv
-      | Clos(p, b, env) -> (* Exercise 6.2 *)
+      | Clos(x, fBody, env) -> (* Exercise 6.2 *)
         let xVal = eval eArg env (* Exercise 6.2 *)
-        let fBodyEnv = (p, xVal) :: env (* Exercise 6.2 *)
-        eval b fBodyEnv (* Exercise 6.2 *)
+        let fBodyEnv = (x, xVal) :: env (* Exercise 6.2 *)
+        eval fBody fBodyEnv (* Exercise 6.2 *)
       | _ -> failwith "eval Call: not a function"    
     ;;
 
