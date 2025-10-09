@@ -19,6 +19,9 @@ A. Generating and compiling the lexer and parser for micro-C, and
 
    open ParseAndRun;;
    run (fromFile "Seven2a.c") [0];;
+   run (fromFile "Seven2b.c") [0];;
+   run (fromFile "Seven2c.c") [0];;
+
 
 B. To compile and use the micro-C compiler
 
