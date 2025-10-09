@@ -1,0 +1,32 @@
+﻿
+The abstract syntax tree
+
+Prog 
+    [Fundec 
+       (None, "main", [(TypI, "n")],)
+        Block 
+          [Stmt 
+             (While
+                (Prim2 (">", Access (AccVar "n"), CstI 0,
+                 Block 
+                   [Stmt (Expr (Prim1 ("printi", Access (AccVar "n"))));
+                    Stmt
+                      (Expr
+                         (Assign
+                            (AccVar "n",
+                             Prim2 ("-", Access (AccVar "n"), CstI 1))))]));
+           Stmt (Expr (Prim1 ("printc", CstI 10)))])]
+
+Prog    --  Declaration
+Fundec  --  Declaration
+TypI    --  Type
+Block   --  Statement
+Stmt    --  Declaration
+While   --  Statement
+Prim2   --  Expression
+Access  --  Expression
+AccVar  --  Expression
+CstI    --  Expression
+Expr    --  Statement
+Assign  --  Expression
+Prim1   --  Expression      
