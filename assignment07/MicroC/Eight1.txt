@@ -1,0 +1,43 @@
+﻿
+Exercise 8.1 Download microc.zip from the book homepage, unpack it to a
+folder MicroC, and build the micro-C compiler as explained in README.TXT
+step (B).
+
+
+
+Study the generated symbolic bytecode. Write up the bytecode in a more structured way 
+with labels only at the beginning of the line (as in this chapter). 
+Write the corresponding micro-C code to the right of the stack machine code. 
+
+ex3
+
+[LDARGS; CALL (1, "L1"); STOP; 
+   Label "L1"; INCSP 1; GETBP; CSTI 1; ADD; CSTI 0; STI; INCSP -1; GOTO "L3"; 
+   Label "L2"; GETBP; CSTI 1; ADD; LDI; PRINTI; INCSP -1; GETBP; CSTI 1; 
+        ADD; GETBP; CSTI 1; ADD; LDI; CSTI 1; ADD; STI; INCSP -1; INCSP 0; 
+   Label "L3"; GETBP; CSTI 1; ADD; LDI; GETBP; CSTI 0; ADD; LDI; LT; IFNZRO "L2"; INCSP -1; RET 0]
+
+ex5
+
+[LDARGS; CALL (1, "L1"); STOP; 
+   Label "L1"; INCSP 1; GETBP; CSTI 1; ADD; GETBP; CSTI 0; ADD; LDI; STI; 
+        INCSP -1; INCSP 1; GETBP; CSTI 0; ADD; LDI; GETBP; CSTI 2; ADD; 
+        CALL (2, "L2"); INCSP -1; GETBP; CSTI 2; ADD; LDI;
+        PRINTI; INCSP -1; INCSP -1; GETBP; CSTI 1; ADD; LDI; PRINTI; INCSP -1;
+        INCSP -1; RET 0; 
+   Label "L2"; GETBP; CSTI 1; ADD; LDI; GETBP; CSTI 0; ADD;
+        LDI; GETBP; CSTI 0; ADD; LDI; MUL; STI; INCSP -1; INCSP 0; RET 1]
+
+
+Note that ex5.c has a nested scope (a block { ... } inside a function body); how is that
+visible in the generated code?
+Execute the compiled programs using java Machine ex3.out 10 and
+similar. Note that these micro-C programs require a command line argument (an
+integer) when they are executed.
+Trace the execution using java Machinetrace ex3.out 4, and explain
+the stack contents and what goes on in each step of execution, and especially how the
+low-level bytecode instructions map to the higher-level features of micro-C. You can
+capture the standard output from a command prompt (in a file ex3trace.txt)
+using the Unix-style notation:
+java Machinetrace ex3.out 4 > ex3trace.txt
+
