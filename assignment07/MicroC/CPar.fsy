@@ -15,7 +15,7 @@ let nl = CstI 10
 %token <string> CSTSTRING NAME
 
 %token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE SWITCH CASE
-%token PLUS MINUS TIMES DIV MOD
+%token PLUS MINUS TIMES DIV MOD PREINC PREDEC
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
 %token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA COLON ASSIGN AMP
@@ -29,6 +29,7 @@ let nl = CstI 10
 %left GT LT GE LE
 %left PLUS MINUS
 %left TIMES DIV MOD 
+%left PREINC PREDEC
 %nonassoc NOT AMP 
 %nonassoc LBRACK          /* highest precedence  */
 
@@ -125,6 +126,10 @@ Expr:
 ExprNotAccess:
     AtExprNotAccess                     { $1                  }
   | Access ASSIGN Expr                  { Assign($1, $3)      }
+  | Access PREINC                       { PreInc($1) }
+  | Access PREDEC                       { PreDec($1) }
+  | PREINC Access                       { PreInc($2) }
+  | PREDEC Access                       { PreDec($2) }
   | NAME LPAR Exprs RPAR                { Call($1, $3)        }  
   | NOT Expr                            { Prim1("!", $2)      }
   | PRINT Expr                          { Prim1("printi", $2) }
@@ -144,11 +149,13 @@ ExprNotAccess:
   | Expr SEQOR  Expr                    { Orelse($1, $3)      }
 ;
 
+
 AtExprNotAccess:
     Const                               { CstI $1             }
   | LPAR ExprNotAccess RPAR             { $2                  } 
   | AMP Access                          { Addr $2             }
 ;
+
 
 Access:
     NAME                                { AccVar $1           }
