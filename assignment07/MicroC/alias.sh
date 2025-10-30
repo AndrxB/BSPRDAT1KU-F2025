@@ -1,0 +1,6 @@
+alias fslex='dotnet ../../fsLexer/FsLexYacc.11.3.0/build/fslex/net6.0/fslex.dll'
+alias fsyacc='dotnet ../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/fsyacc.dll '
+alias fsi='dotnet fsi -r ../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll Util.fs Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs Interp.fs ParseAndRun.fs ParseAndComp.fs'
+# alias gencomp='dotnet fsi -r ../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll Util.fs Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAndRun.fs'
+# alias compuse='dotnet fsi -r ../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll Util.fs Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Comp.fs ParseAndComp.fs'
+# alias compuseback = 'dotnet fsi -r ../../fsLexer/FsLexYacc.11.3.0/build/fsyacc/net6.0/FsLexYacc.Runtime.dll Util.fs Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs'
