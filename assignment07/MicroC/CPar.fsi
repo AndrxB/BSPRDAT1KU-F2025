@@ -10,6 +10,7 @@ type token =
   | RBRACK
   | SEMI
   | COMMA
+  | COLON
   | ASSIGN
   | AMP
   | NOT
@@ -36,6 +37,8 @@ type token =
   | RETURN
   | VOID
   | WHILE
+  | SWITCH
+  | CASE
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTINT of (int)
@@ -50,6 +53,7 @@ type tokenId =
     | TOKEN_RBRACK
     | TOKEN_SEMI
     | TOKEN_COMMA
+    | TOKEN_COLON
     | TOKEN_ASSIGN
     | TOKEN_AMP
     | TOKEN_NOT
@@ -76,6 +80,8 @@ type tokenId =
     | TOKEN_RETURN
     | TOKEN_VOID
     | TOKEN_WHILE
+    | TOKEN_SWITCH
+    | TOKEN_CASE
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTINT
@@ -97,6 +103,8 @@ type nonTerminalId =
     | NONTERM_Stmt
     | NONTERM_StmtM
     | NONTERM_StmtU
+    | NONTERM_Cases
+    | NONTERM_Case
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
     | NONTERM_AtExprNotAccess

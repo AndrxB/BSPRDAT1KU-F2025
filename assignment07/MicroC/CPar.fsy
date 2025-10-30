@@ -100,8 +100,7 @@ StmtM:  /* No unbalanced if-else */
   | Block                               { $1                   }
   | IF LPAR Expr RPAR StmtM ELSE StmtM  { If($3, $5, $7)       }
   | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
-  | SWITCH LPAR Expr RPAR LBRACK Cases RBRACK { Switch($3, $6) }
-  | CASE StmtM SEMI
+  | SWITCH LPAR Expr RPAR LBRACE Cases RBRACE { Switch($3, $6) }
 ;
 
 StmtU:
@@ -113,6 +112,7 @@ StmtU:
 Cases:
     /* empty */                         { [] }
   | Case Cases                          { $1 :: $2 }
+;
 
 Case:
   CASE CSTINT COLON Block    { ($2, $4) }
