@@ -143,6 +143,19 @@ let rec exec stmt (locEnv : locEnv) (gloEnv : gloEnv) (store : store) : store =
           | s1::sr -> loop sr (stmtordec s1 locEnv gloEnv store)
       loop stmts (locEnv, store) 
     | Return _ -> failwith "return not implemented"
+    | Switch (cond, cases) ->
+      // Evaluate the switch condition
+      let (v, store1) = eval cond locEnv gloEnv store
+
+      // Go through the cases
+      let rec findCase cs store =
+          match cs with
+          | [] -> store                         // no match => do nothing
+          | (k, body) :: rest ->
+              if v = k then exec body locEnv gloEnv store  // run matching body
+              else findCase rest store                     // keep searching
+
+      findCase cases store1
 
 and stmtordec stmtordec locEnv gloEnv store = 
     match stmtordec with 
@@ -204,6 +217,8 @@ and eval e locEnv gloEnv store : int * store =
       let old = getSto store1 loc
       let newValue = old - 1
       newValue, setSto store1 loc newValue
+
+
 
 and access acc locEnv gloEnv store : int * store = 
     match acc with 

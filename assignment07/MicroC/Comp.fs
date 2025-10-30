@@ -144,6 +144,29 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
+    | Switch (condition, cases) ->
+      let lend = newLabel()
+
+      let rec build cs =
+          match cs with
+          | [] -> ([], [])
+          | (k, body) :: rest ->
+              let lcase = newLabel()
+              let tcode = [DUP; CSTI k; EQ; IFNZRO lcase]
+              let bcode = [Label lcase; INCSP -1] @ cStmt body varEnv funEnv @ [GOTO lend]
+              let (trest, brest) = build rest
+              (tcode @ trest, bcode @ brest)
+
+      let (tests, bodies) = build cases
+
+      cExpr condition varEnv funEnv
+      @ tests
+      @ [INCSP -1]
+      @ bodies
+      @ [Label lend]
+
+      
+       
 
 and cStmtOrDec stmtOrDec (varEnv : varEnv) (funEnv : funEnv) : varEnv * instr list = 
     match stmtOrDec with 
